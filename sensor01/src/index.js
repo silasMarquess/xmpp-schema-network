@@ -14,23 +14,29 @@ sensor1.on("online", (address) => {
 
   // Enviar dados para o sensor2 ap�s 3 segundos
   setInterval(() => {
-    const date = new Date();
+    const date = new Date(Date.now());
+
+    const temp = Math.random() * (50 - 10 + 1);
+    const humildity = Math.random() * (100 - 10 + 1);
+
     const message = xml(
       "message",
       { type: "chat", to: "sensor02@example.org/sensor02" },
       xml(
         "body",
         {},
-        `25/69/${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+        `${temp.toFixed(2)}/${humildity.toFixed(
+          2
+        )}/${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
       )
     );
 
     // Enviar a mensagem
     sensor1.send(message);
     console.log("Dados enviados para sensor1:");
-    console.log("Temperature: 25.05 °C");
-    console.log("Humidity: 69.83 %");
-  }, 5000); // Enviar dados a cada 5 segundos*/
+    console.log(`Temperature: ${temp.toFixed(2)} Cº`);
+    console.log(`Humidity: ${humildity.toFixed(2)} %`);
+  }, 10000); // Enviar dados a cada 5 segundos*/
 });
 
 /*sensor1.on("stanza", (stanza) => {
